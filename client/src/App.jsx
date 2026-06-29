@@ -1,9 +1,33 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 import CreateAdmin from "./pages/CreateAdmin";
+import Login from "./pages/Login";
 
 function App() {
-  return (
-    <CreateAdmin />
-  );
+    return (
+        <BrowserRouter>
+
+            <Routes>
+
+                <Route
+                    path="/"
+                    element={<Navigate to="/login" />}
+                />
+
+                <Route
+                    path="/create-admin"
+                    element={<CreateAdmin />}
+                />
+
+                <Route
+                    path="/login"
+                    element={<Login />}
+                />
+
+            </Routes>
+
+        </BrowserRouter>
+    );
 }
 
 export default App;

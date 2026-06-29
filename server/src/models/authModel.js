@@ -2,7 +2,6 @@ const db = require("../config/db");
 
 const AuthModel = {
 
-    // Create a new admin
     createAdmin: (username, email, password, callback) => {
 
         const sql = `
@@ -14,7 +13,6 @@ const AuthModel = {
 
     },
 
-    // Find admin by email
     findByEmail: (email, callback) => {
 
         const sql = `
