@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import Dashboard from "./pages/Dashboard";
 import CreateAdmin from "./pages/CreateAdmin";
 import Login from "./pages/Login";
 
@@ -23,7 +23,10 @@ function App() {
                     path="/login"
                     element={<Login />}
                 />
-
+                <Route
+                    path="/dashboard"
+                    element={<Dashboard />}
+                />
             </Routes>
 
         </BrowserRouter>

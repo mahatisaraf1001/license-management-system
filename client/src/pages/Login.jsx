@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaClipboardList, FaEye, FaEyeSlash } from "react-icons/fa";
+import { loginAdmin } from "../services/authService";
 import "../styles/Login.css";
 
 function Login() {
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         email: "",
@@ -10,6 +14,9 @@ function Login() {
     });
 
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const [messageType, setMessageType] = useState("");
 
     const handleChange = (e) => {
 
@@ -22,11 +29,49 @@ function Login() {
 
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
 
-        console.log(formData);
+        setMessage("");
+
+        if (!formData.email || !formData.password) {
+            setMessage("Please enter both email and password.");
+            setMessageType("danger");
+            return;
+        }
+
+        try {
+
+            setLoading(true);
+
+            const response = await loginAdmin(formData);
+
+            localStorage.setItem("token", response.token);
+            localStorage.setItem("admin", JSON.stringify(response.admin));
+
+            setMessage(response.message);
+            setMessageType("success");
+
+            setTimeout(() => {
+                navigate("/dashboard");
+            }, 1000);
+
+        } catch (error) {
+
+            if (error.response) {
+                setMessage(error.response.data.message);
+            } else {
+                setMessage("Unable to connect to server.");
+            }
+
+            setMessageType("danger");
+
+        } finally {
+
+            setLoading(false);
+
+        }
 
     };
 
@@ -53,6 +98,12 @@ function Login() {
 
                 </div>
 
+                {message && (
+                    <div className={`alert alert-${messageType}`}>
+                        {message}
+                    </div>
+                )}
+
                 <form onSubmit={handleSubmit}>
 
                     <div className="mb-3">
@@ -68,6 +119,7 @@ function Login() {
                             placeholder="Enter email"
                             value={formData.email}
                             onChange={handleChange}
+                            disabled={loading}
                         />
 
                     </div>
@@ -87,12 +139,14 @@ function Login() {
                                 placeholder="Enter password"
                                 value={formData.password}
                                 onChange={handleChange}
+                                disabled={loading}
                             />
 
                             <button
                                 type="button"
                                 className="btn btn-outline-secondary"
                                 onClick={() => setShowPassword(!showPassword)}
+                                disabled={loading}
                             >
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
                             </button>
@@ -104,8 +158,9 @@ function Login() {
                     <button
                         type="submit"
                         className="btn btn-primary btn-login"
+                        disabled={loading}
                     >
-                        Login
+                        {loading ? "Logging in..." : "Login"}
                     </button>
 
                 </form>
