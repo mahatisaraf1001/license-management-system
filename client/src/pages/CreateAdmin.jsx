@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../styles/CreateAdmin.css";
 import { FaClipboardList, FaEye, FaEyeSlash } from "react-icons/fa";
+import { registerAdmin } from "../services/authService";
 
 function CreateAdmin() {
 
@@ -31,7 +32,7 @@ function CreateAdmin() {
 
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
 
         e.preventDefault();
 
@@ -66,19 +67,41 @@ function CreateAdmin() {
             return;
         }
 
-        setLoading(true);
+        try {
 
-        setTimeout(() => {
+            setLoading(true);
+
+            const response = await registerAdmin({
+                username: formData.username,
+                email: formData.email,
+                password: formData.password
+            });
+
+            setMessage(response.message);
+            setMessageType("success");
+
+            setFormData({
+                username: "",
+                email: "",
+                password: "",
+                confirmPassword: ""
+            });
+
+        } catch (error) {
+
+            if (error.response) {
+                setMessage(error.response.data.message);
+            } else {
+                setMessage("Unable to connect to server.");
+            }
+
+            setMessageType("danger");
+
+        } finally {
 
             setLoading(false);
 
-            setMessage("Validation Successful! Backend connection is next.");
-
-            setMessageType("success");
-
-            console.log(formData);
-
-        }, 1500);
+        }
 
     };
 
