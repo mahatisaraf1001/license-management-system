@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
     FaClipboardList,
     FaCheckCircle,
@@ -6,11 +7,48 @@ import {
 } from "react-icons/fa";
 
 import DashboardCard from "../components/DashboardCard";
+import { getAllLicenses } from "../services/licenseService";
 import "../styles/Dashboard.css";
 
 function Dashboard() {
 
     const admin = JSON.parse(localStorage.getItem("admin"));
+
+    const [licenses, setLicenses] = useState([]);
+
+    useEffect(() => {
+        fetchLicenses();
+    }, []);
+
+    const fetchLicenses = async () => {
+
+        try {
+
+            const response = await getAllLicenses();
+
+            setLicenses(response.data);
+
+        } catch (error) {
+
+            console.error("Error fetching licenses:", error);
+
+        }
+
+    };
+
+    const totalLicenses = licenses.length;
+
+    const activeLicenses = licenses.filter(
+        (license) => license.status === "Active"
+    ).length;
+
+    const expiringLicenses = licenses.filter(
+        (license) => license.status === "Expiring Soon"
+    ).length;
+
+    const expiredLicenses = licenses.filter(
+        (license) => license.status === "Expired"
+    ).length;
 
     return (
 
@@ -19,7 +57,7 @@ function Dashboard() {
             <div className="dashboard-header">
 
                 <h1>
-                    Good Afternoon, {admin?.username} 
+                    Good Afternoon, {admin?.username}
                 </h1>
 
                 <p>
@@ -32,28 +70,28 @@ function Dashboard() {
 
                 <DashboardCard
                     title="Total Licenses"
-                    value="0"
-                    subtitle="No licenses added"
+                    value={totalLicenses}
+                    subtitle="Total software licenses"
                     icon={<FaClipboardList />}
                 />
 
                 <DashboardCard
                     title="Active Licenses"
-                    value="0"
+                    value={activeLicenses}
                     subtitle="Currently active"
                     icon={<FaCheckCircle />}
                 />
 
                 <DashboardCard
                     title="Expiring Soon"
-                    value="0"
+                    value={expiringLicenses}
                     subtitle="Next 30 days"
                     icon={<FaClock />}
                 />
 
                 <DashboardCard
                     title="Expired"
-                    value="0"
+                    value={expiredLicenses}
                     subtitle="Needs renewal"
                     icon={<FaTimesCircle />}
                 />
