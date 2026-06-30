@@ -1,0 +1,82 @@
+.add-license-page{
+    width:100%;
+}
+
+.page-header{
+    margin-bottom:40px;
+}
+
+.page-header h2{
+    margin:0;
+    font-size:34px;
+    color:#111827;
+}
+
+.page-header p{
+    color:#6b7280;
+    margin-top:8px;
+}
+
+.add-options{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:30px;
+
+}
+
+.option-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:45px;
+
+    text-align:center;
+
+    cursor:pointer;
+
+    border:1px solid #e5e7eb;
+
+    transition:.3s;
+
+}
+
+.option-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 12px 25px rgba(37,99,235,.12);
+
+}
+
+.option-icon{
+
+    font-size:60px;
+
+    color:#2563eb;
+
+    margin-bottom:25px;
+
+}
+
+.excel{
+
+    color:#16a34a;
+
+}
+
+.option-card h3{
+
+    margin-bottom:12px;
+
+}
+
+.option-card p{
+
+    color:#6b7280;
+
+}

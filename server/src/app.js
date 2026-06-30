@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const licenseRoutes = require("./routes/licenseRoutes");
 require("dotenv").config();
 
 const db = require("./config/db");
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/licenses", licenseRoutes);
 
 const PORT = process.env.PORT || 5000;
 
