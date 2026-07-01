@@ -7,11 +7,11 @@ const License = {
         const sql = `
             INSERT INTO licenses
             (
-                sr_no,
                 description,
                 vendor_name,
                 quantity,
                 duration,
+                duration_unit,
                 purchase_date,
                 renewal_date,
                 amount,
@@ -25,11 +25,11 @@ const License = {
         db.query(
             sql,
             [
-                licenseData.sr_no,
                 licenseData.description,
                 licenseData.vendor_name,
                 licenseData.quantity,
                 licenseData.duration,
+                licenseData.duration_unit,
                 licenseData.purchase_date,
                 licenseData.renewal_date,
                 licenseData.amount,
@@ -45,7 +45,7 @@ const License = {
     getAll: (callback) => {
 
         db.query(
-            "SELECT * FROM licenses ORDER BY renewal_date ASC",
+            "SELECT * FROM licenses ORDER BY id ASC",
             callback
         );
 
@@ -66,28 +66,28 @@ const License = {
         const sql = `
             UPDATE licenses
             SET
-                sr_no=?,
-                description=?,
-                vendor_name=?,
-                quantity=?,
-                duration=?,
-                purchase_date=?,
-                renewal_date=?,
-                amount=?,
-                po_number=?,
-                notes=?,
-                status=?
-            WHERE id=?
+                description = ?,
+                vendor_name = ?,
+                quantity = ?,
+                duration = ?,
+                duration_unit = ?,
+                purchase_date = ?,
+                renewal_date = ?,
+                amount = ?,
+                po_number = ?,
+                notes = ?,
+                status = ?
+            WHERE id = ?
         `;
 
         db.query(
             sql,
             [
-                licenseData.sr_no,
                 licenseData.description,
                 licenseData.vendor_name,
                 licenseData.quantity,
                 licenseData.duration,
+                licenseData.duration_unit,
                 licenseData.purchase_date,
                 licenseData.renewal_date,
                 licenseData.amount,
@@ -104,7 +104,7 @@ const License = {
     delete: (id, callback) => {
 
         db.query(
-            "DELETE FROM licenses WHERE id=?",
+            "DELETE FROM licenses WHERE id = ?",
             [id],
             callback
         );

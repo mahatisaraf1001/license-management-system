@@ -1,0 +1,128 @@
+.licenses-table{
+
+    background:#fff;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+thead{
+
+    background:#f8fafc;
+
+}
+
+th{
+
+    padding:18px;
+
+    text-align:left;
+
+    font-weight:600;
+
+}
+
+td{
+
+    padding:18px;
+
+    border-top:1px solid #edf2f7;
+
+}
+
+.status{
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.status.active{
+
+    background:#dcfce7;
+
+    color:#15803d;
+
+}
+
+.status.expiringsoon{
+
+    background:#fef3c7;
+
+    color:#b45309;
+
+}
+
+.status.expired{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+}
+
+.action-btn{
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    margin-right:12px;
+
+}
+
+.edit{
+
+    color:#2563eb;
+
+}
+
+.delete{
+
+    color:#dc2626;
+
+}
+
+.empty-table{
+
+    background:white;
+
+    padding:60px;
+
+    text-align:center;
+
+    border-radius:15px;
+
+    color:#9ca3af;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+th,
+td{
+
+    white-space: nowrap;
+
+}

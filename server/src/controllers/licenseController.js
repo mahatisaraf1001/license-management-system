@@ -6,73 +6,93 @@ const calculateStatus = require("../utils/statusCalculator");
 // ==========================================
 
 exports.createLicense = (req, res) => {
+
     try {
+
         const {
-            sr_no,
             description,
             vendor_name,
             quantity,
             duration,
+            duration_unit,
             purchase_date,
             renewal_date,
             amount,
             po_number,
-            notes,
+            notes
         } = req.body;
 
         if (
-            !sr_no ||
             !description ||
             !vendor_name ||
             !quantity ||
             !duration ||
+            !duration_unit ||
             !purchase_date ||
             !renewal_date ||
             !amount ||
             !po_number
         ) {
+
             return res.status(400).json({
                 success: false,
-                message: "Please fill all required fields.",
+                message: "Please fill all required fields."
             });
+
         }
 
         const status = calculateStatus(renewal_date);
 
         License.create(
             {
-                sr_no,
                 description,
                 vendor_name,
                 quantity,
                 duration,
+                duration_unit,
                 purchase_date,
                 renewal_date,
                 amount,
                 po_number,
                 notes,
-                status,
+                status
             },
             (err) => {
+
                 if (err) {
+
                     return res.status(500).json({
                         success: false,
-                        message: err.message,
+                        message: err.message
                     });
+
                 }
 
                 return res.status(201).json({
+
                     success: true,
-                    message: "License added successfully.",
+
+                    message: "License added successfully."
+
                 });
+
             }
         );
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message,
-        });
+
     }
+
+    catch (error) {
+
+        return res.status(500).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
 };
 
 // ==========================================
@@ -80,19 +100,28 @@ exports.createLicense = (req, res) => {
 // ==========================================
 
 exports.getAllLicenses = (req, res) => {
+
     License.getAll((err, results) => {
+
         if (err) {
+
             return res.status(500).json({
                 success: false,
-                message: err.message,
+                message: err.message
             });
+
         }
 
         return res.status(200).json({
+
             success: true,
-            data: results,
+
+            data: results
+
         });
+
     });
+
 };
 
 // ==========================================
@@ -100,28 +129,39 @@ exports.getAllLicenses = (req, res) => {
 // ==========================================
 
 exports.getLicenseById = (req, res) => {
+
     const { id } = req.params;
 
     License.getById(id, (err, results) => {
+
         if (err) {
+
             return res.status(500).json({
                 success: false,
-                message: err.message,
+                message: err.message
             });
+
         }
 
         if (results.length === 0) {
+
             return res.status(404).json({
                 success: false,
-                message: "License not found.",
+                message: "License not found."
             });
+
         }
 
         return res.status(200).json({
+
             success: true,
-            data: results[0],
+
+            data: results[0]
+
         });
+
     });
+
 };
 
 // ==========================================
@@ -129,25 +169,36 @@ exports.getLicenseById = (req, res) => {
 // ==========================================
 
 exports.updateLicense = (req, res) => {
+
     const { id } = req.params;
 
     const licenseData = req.body;
 
-    licenseData.status = calculateStatus(licenseData.renewal_date);
+    licenseData.status = calculateStatus(
+        licenseData.renewal_date
+    );
 
     License.update(id, licenseData, (err) => {
+
         if (err) {
+
             return res.status(500).json({
                 success: false,
-                message: err.message,
+                message: err.message
             });
+
         }
 
         return res.status(200).json({
+
             success: true,
-            message: "License updated successfully.",
+
+            message: "License updated successfully."
+
         });
+
     });
+
 };
 
 // ==========================================
@@ -155,19 +206,28 @@ exports.updateLicense = (req, res) => {
 // ==========================================
 
 exports.deleteLicense = (req, res) => {
+
     const { id } = req.params;
 
     License.delete(id, (err) => {
+
         if (err) {
+
             return res.status(500).json({
                 success: false,
-                message: err.message,
+                message: err.message
             });
+
         }
 
         return res.status(200).json({
+
             success: true,
-            message: "License deleted successfully.",
+
+            message: "License deleted successfully."
+
         });
+
     });
+
 };

@@ -8,9 +8,12 @@ import Licenses from "./pages/Licenses";
 import AddLicense from "./pages/AddLicense";
 import ImportExcel from "./pages/ImportExcel";
 import ManualLicense from "./pages/ManualLicense";
+import EditLicense from "./pages/EditLicense";
 
 function App() {
+
     return (
+
         <BrowserRouter>
 
             <Routes>
@@ -29,6 +32,7 @@ function App() {
                     path="/login"
                     element={<Login />}
                 />
+
                 <Route
                     path="/dashboard"
                     element={
@@ -39,6 +43,7 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+
                 <Route
                     path="/licenses"
                     element={
@@ -71,6 +76,7 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+
                 <Route
                     path="/add-license/manual"
                     element={
@@ -81,9 +87,24 @@ function App() {
                         </ProtectedRoute>
                     }
                 />
+
+                <Route
+                    path="/licenses/edit/:id"
+                    element={
+                        <ProtectedRoute>
+                            <DashboardLayout>
+                                <EditLicense />
+                            </DashboardLayout>
+                        </ProtectedRoute>
+                    }
+                />
+
             </Routes>
+
         </BrowserRouter>
+
     );
+
 }
 
 export default App;

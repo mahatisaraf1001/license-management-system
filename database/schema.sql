@@ -27,7 +27,13 @@ CREATE TABLE licenses (
 
     quantity INT NOT NULL,
 
-    duration INT NOT NULL COMMENT 'Duration in Years',
+    duration INT NOT NULL,
+
+    duration_unit ENUM(
+        'Days',
+        'Months',
+        'Years'
+    ) NOT NULL DEFAULT 'Years',
 
     purchase_date DATE NOT NULL,
 
@@ -39,8 +45,11 @@ CREATE TABLE licenses (
 
     notes TEXT,
 
-    status ENUM('Active','Expiring Soon','Expired')
-        DEFAULT 'Active',
+    status ENUM(
+        'Active',
+        'Expiring Soon',
+        'Expired'
+    ) DEFAULT 'Active',
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
